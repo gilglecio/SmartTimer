@@ -5,8 +5,8 @@ namespace Gilglecio;
 class SmartTimer
 {
 	// d-m-Y H:i:s
-	private $_start;
-	private $_end;
+	private $_date1;
+	private $_date2;
 
 	private $_difference;
 	private $_before;
@@ -30,10 +30,10 @@ class SmartTimer
 	const MONTH = 2592000; // 30 days
 	const YEAR = 31104000;
 
-	public function __construct($start, $end=null)
+	public function __construct($_date1, $_date2=null)
 	{	
-		$this->_start = $start;
-		$this->_end = $end ? $end : date('Y-m-d H:i:s');
+		$this->_date1 = $_date1;
+		$this->_date2 = $_date2 ? $_date2 : date('Y-m-d H:i:s');
 
 		return $this->validation() ? $this->show() : 'Format: Y-m-d H:i:s';
 	}
@@ -58,9 +58,15 @@ class SmartTimer
 
 	public function show()
 	{
+		$json = [
+			'date1' => $this->dateLess(),
+			'date2' => $this->dateLarger(),
+			'date' => $this->_data
+		];
+
 		$this->difference();
 		
-		$out = $this->_start.' at&eacute; '.$this->_end.': ';
+		$out = null;
 
 		foreach ($this->_data as $string => $value) {
 			if ($value) {
@@ -68,7 +74,9 @@ class SmartTimer
 			}
 		}
 
-		return $out;
+		$json['string'] = $out;
+
+		return json_encode($json);
 	}
 
 	private function second()
@@ -115,7 +123,7 @@ class SmartTimer
 
 	private function difference()
 	{
-		$this->_difference = (int) strtotime($this->_end) - strtotime($this->_start);
+		$this->_difference = (int) (strtotime($this->dateLarger()) - strtotime($this->dateLess()));
 		$this->year();
 	}
 
@@ -139,6 +147,19 @@ class SmartTimer
 
 		return $int;
 	}
+
+	private function dateLess()
+	{
+		return ($this->_date1 < $this->_date2) ? $this->_date1 : $this->_date2;
+	}
+
+	private function dateLarger()
+	{
+		return ($this->_date1 > $this->_date2) ? $this->_date1 : $this->_date2;
+	}
 }
 
-echo new SmartTimer('1994-03-16 03:45:34', '1997-11-04 12:01:01');
+$date1 = $_POST['date1'];
+$date2 = $_POST['date2'];
+
+echo new SmartTimer($date1, $date2);
