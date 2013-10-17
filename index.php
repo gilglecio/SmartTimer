@@ -17,8 +17,8 @@
 				function enviar() {
 
 					$.post('SmartTimer.php', {
-						date1: $('.date1').val()+' '+$('.time1').val()+':00',
-						date2: $('.date2').val()+' '+$('.time2').val()+':00'
+						date1: $('.date1').val()+' '+$('.time1').val()+':'+$('.second1').val(),
+						date2: $('.date2').val()+' '+$('.time2').val()+':'+$('.second2').val()
 					}, function (data) {
 
 						if (!data.string) return false;
@@ -35,9 +35,13 @@
 		<h2>Intervalo</h2>
 
 		<form action="">
-			<p>De <input class="date1" type="date" name="date1" /><input class="time1" type="time" name="time1" value="00:00" />
+			<p>De <input class="date1" type="date" name="date1" />
+				H<input class="time1" type="time" name="time1" value="00:00" />
+				s<input type="number" class="second1" name="second1" min="00" max="59" value="00">
 				Até
-				<input class="date2" type="date" name="date2" /><input class="time2" type="time" name="time2" value="00:00" /></p>
+				<input class="date2" type="date" name="date2" />
+				H<input class="time2" type="time" name="time2" value="00:00" />
+				s<input type="number" class="second2" name="second2" min="00" max="59" value="00"></p>
 		</form>
 
 		<div class="view">
