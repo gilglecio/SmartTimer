@@ -159,7 +159,7 @@ class SmartTimer
 	}
 }
 
-$date1 = $_POST['date1');
-$date2 = $_POST['date2');
+$date1 = $_POST['date1'];
+$date2 = $_POST['date2'];
 
 echo new SmartTimer($date1, $date2);
