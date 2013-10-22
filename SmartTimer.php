@@ -1,6 +1,6 @@
 <?php  
 
-namespace Gilglecio;
+namespace Gilglecio; // ele em php, o que ta funcionando: quiser olhar...
 
 class SmartTimer
 {
@@ -11,7 +11,7 @@ class SmartTimer
 	private $_difference;
 	private $_before;
 
-	private $_data = [
+	private $_data = array(
 		'year' => 0,
 		'month' => 0,
 		'week' => 0,
@@ -19,7 +19,7 @@ class SmartTimer
 		'hour' => 0,
 		'minute' => 0,
 		'second' => 0
-	];
+	);
 
 	// seconds
 	const SECOND = 1;
@@ -43,26 +43,13 @@ class SmartTimer
 		return $this->show();
 	}
 
-	public function validation()
-	{
-
-		// Y-m-d H:i:s
-		$match = '/^(((\d{4})(-)(0[13578]|10|12)(-)(0[1-9]|[12][0-9]|3[01]))|((\d{4})(-)(0[469]|1‌​1)(-)([0][1-9]|[12][0-9]|30))|((\d{4})(-)(02)(-)(0[1-9]|1[0-9]|2[0-8]))|(([02468]‌​[048]00)(-)(02)(-)(29))|(([13579][26]00)(-)(02)(-)(29))|(([0-9][0-9][0][48])(-)(0‌​2)(-)(29))|(([0-9][0-9][2468][048])(-)(02)(-)(29))|(([0-9][0-9][13579][26])(-)(02‌​)(-)(29)))(\s([0-1][0-9]|2[0-4]):([0-5][0-9]):([0-5][0-9]))$/';
-		
-		if (preg_match($match, $this->_date1)) { 
-			return preg_match($match, $this->_date2);
-		}
-
-		return false;
-	}
-
 	public function show()
 	{
-		$json = [
+		$json = array(
 			'date1' => $this->dateLess(),
 			'date2' => $this->dateLarger(),
 			'date' => $this->_data
-		];
+		);
 
 		$this->difference();
 		
@@ -77,6 +64,19 @@ class SmartTimer
 		$json['string'] = $out;
 
 		return json_encode($json);
+	}
+
+	private function validation()
+	{
+
+		// Y-m-d H:i:s
+		$match = '/^(((\d{4})(-)(0[13578]|10|12)(-)(0[1-9]|[12][0-9]|3[01]))|((\d{4})(-)(0[469]|1‌​1)(-)([0][1-9]|[12][0-9]|30))|((\d{4})(-)(02)(-)(0[1-9]|1[0-9]|2[0-8]))|(([02468]‌​[048]00)(-)(02)(-)(29))|(([13579][26]00)(-)(02)(-)(29))|(([0-9][0-9][0][48])(-)(0‌​2)(-)(29))|(([0-9][0-9][2468][048])(-)(02)(-)(29))|(([0-9][0-9][13579][26])(-)(02‌​)(-)(29)))(\s([0-1][0-9]|2[0-4]):([0-5][0-9]):([0-5][0-9]))$/';
+		
+		if (preg_match($match, $this->_date1)) { 
+			return preg_match($match, $this->_date2);
+		}
+
+		return false;
 	}
 
 	private function second()
@@ -140,10 +140,10 @@ class SmartTimer
 		$division = $this->_difference / $const;
 		$int = (int) $division;
 
-		$this->_before = [
+		$this->_before = array(
 			'const' => $const,
 			'int' => $int
-		];
+		);
 
 		return $int;
 	}
@@ -159,7 +159,7 @@ class SmartTimer
 	}
 }
 
-$date1 = $_POST['date1'];
-$date2 = $_POST['date2'];
+$date1 = $_POST['date1');
+$date2 = $_POST['date2');
 
 echo new SmartTimer($date1, $date2);
